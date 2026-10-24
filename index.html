@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>保健食品速查手冊（全品項整合版）</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #f1f5f9; color: #1e293b; padding-bottom: 60px; line-height: 1.5; }
+    
+    .header { background: linear-gradient(135deg, #065f46 0%, #047857 100%); color: white; padding: 20px 16px; text-align: center; }
+    .header h1 { font-size: 19px; font-weight: 700; }
+    .header p { font-size: 12px; opacity: 0.9; margin-top: 4px; }
+    
+    .container { max-width: 600px; margin: 0 auto; padding: 12px; }
+
+    /* 原生免 JS 折疊手風琴 (手機本地開啟 100% 可點擊) */
+    details { background: white; border-radius: 10px; margin-bottom: 12px; border: 1px solid #cbd5e1; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+    summary { padding: 14px 16px; font-size: 15px; font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; background: #ffffff; user-select: none; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "▼"; font-size: 12px; color: #64748b; transition: transform 0.2s; }
+    details[open] summary::after { transform: rotate(180deg); }
+    details[open] summary { border-bottom: 1px solid #e2e8f0; background: #f8fafc; }
+    
+    .content-box { padding: 12px 14px; background: white; }
+
+    /* 警示框 */
+    .alert-box { border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; font-size: 12px; line-height: 1.6; }
+    .alert-danger { background-color: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; }
+    .alert-warning { background-color: #fffbeb; border-left: 4px solid #f59e0b; color: #92400e; }
+    .alert-success { background-color: #f0fdf4; border-left: 4px solid #10b981; color: #166534; }
+    .alert-purple { background-color: #faf5ff; border-left: 4px solid #a855f7; color: #6b21a8; }
+
+    /* 長條圖 */
+    .bar-row { margin-bottom: 10px; }
+    .bar-label { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; margin-bottom: 3px; }
+    .bar-track { height: 16px; background-color: #f1f5f9; border-radius: 8px; overflow: hidden; display: flex; }
+    .bar-fill { height: 100%; border-radius: 8px; }
+    .bg-green { background-color: #10b981; }
+    .bg-blue { background-color: #3b82f6; }
+    .bg-amber { background-color: #f59e0b; }
+    .bg-rose { background-color: #f43f5e; }
+
+    /* 作息時鐘 */
+    .time-node { margin-bottom: 14px; border-left: 3px solid #059669; padding-left: 10px; }
+    .time-title { font-size: 13px; font-weight: 700; color: #047857; margin-bottom: 2px; }
+    .time-content { font-size: 12px; color: #334155; }
+
+    /* 品項資訊卡片 */
+    .item-card { border-left: 4px solid #10b981; padding: 10px 12px; background: #fdfdfd; border-radius: 0 8px 8px 0; margin-bottom: 10px; border-top: 1px solid #f1f5f9; border-right: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9; }
+    .item-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+    .item-title { font-size: 14px; font-weight: 700; color: #0f172a; }
+    .item-price { font-size: 12px; font-weight: 700; color: #059669; }
+    .item-spec { font-size: 11px; color: #64748b; margin-bottom: 4px; }
+    .item-desc { font-size: 12px; color: #334155; margin-bottom: 4px; }
+    .item-tip { font-size: 11px; background: #f8fafc; padding: 5px 8px; border-radius: 6px; color: #475569; border: 1px dashed #cbd5e1; }
+    
+    .tag { display: inline-block; font-size: 10px; padding: 1px 5px; border-radius: 4px; font-weight: 600; margin-right: 4px; }
+    .tag-cp { background: #dcfce7; color: #15803d; }
+    .tag-new { background: #e0e7ff; color: #4338ca; }
+    .tag-warn { background: #fef3c7; color: #b45309; }
+    .tag-urgent { background: #fee2e2; color: #b91c1c; }
+
+    /* 手動擴充指引區 */
+    .add-box { border: 2px dashed #94a3b8; background: #f8fafc; border-radius: 8px; padding: 12px; margin-bottom: 12px; font-size: 12px; color: #475569; line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>🌿 個人保健品 隨身速查手冊</h1>
+    <p>全品項整合・劑量安全檢視・可折疊擴充版</p>
+  </div>
+
+  <div class="container">
+
+    <!-- 1. 核心衝突與超標評估區 (置頂必讀) -->
+    <details open>
+      <summary style="color: #dc2626;">⚠️ 劑量超標與交互衝突警示（必讀）</summary>
+      <div class="content-box">
+        
+        <div class="alert-box alert-warning">
+          <b>1. 鋅（30mg）與 鎂（200~400mg）吸收競爭衝突：</b><br>
+          • 鋅與鎂在小腸使用相同的二價金屬吸收通道。若同時高劑量吞服，會彼此競爭降低吸收率。<br>
+          • <b>解法</b>：<b>午餐後吃鋅錠，晚餐後或睡前吃蘋果酸鎂</b>，兩者完美錯開！<br>
+          • <b>纖維衝突</b>：兩者皆不可與「洋車前子纖維」同服（需間隔 2 小時）。
+        </div>
+
+        <div class="alert-box alert-purple">
+          <b>2. 退黑激素（Melatonin 10mg）定位：</b><br>
+          • 10mg 屬<b>超高強度</b>，不可天天吃。請作為「偶爾急救、嚴重失眠或倒時差」使用。吃完立刻關燈放下手機！
+        </div>
+
+        <div class="alert-box alert-danger">
+          <b>3. 維生素 C 重複補充提醒：</b><br>
+          • 「DHC 持續型 C (1000mg)」與「Nutricost 維生素 C (1000mg)」<b>請二擇一吃</b>，避免重疊達到每日 2000mg 上限而引起腹瀉。
+        </div>
+
+        <div class="alert-box alert-success">
+          <b>4. 魚油、葉黃素與葉酸協同：</b><br>
+          • LOVITA 魚油提供優質油脂，早餐與葉黃素、DHC 葉酸同吃，能大幅提高脂溶性抗氧化物的吸收利用率。
+        </div>
+
+      </div>
+    </details>
+
+    <!-- 2. 24小時最佳吃法流程圖 -->
+    <details open>
+      <summary style="color: #047857;">⏰ 24 小時作息「最佳吃法」排程</summary>
+      <div class="content-box">
+        <div class="time-node">
+          <div class="time-title">🌅 早餐後（8:00 - 9:00）</div>
+          <div class="time-content">
+            • <b>葉黃素軟膠囊 1 顆 ＋ LOVITA 魚油 2 顆</b>：油脂加乘吸收極佳<br>
+            • <b>DHC 葉酸 1 粒 (400mcg)</b>：細胞健康與基礎保養<br>
+            • <b>松樹皮萃取 1 顆 ＋ 蔓越莓 1 顆</b>：啟動微循環與日間私密防護<br>
+            • <b>DHC 維生素 C（或 Nutricost 二擇一）</b>：抗氧化支持<br>
+            • <b>DHC 薏仁精華 1 粒</b>：隨餐調理透亮
+          </div>
+        </div>
+
+        <div class="time-node">
+          <div class="time-title">🍱 午餐前 15 分鐘（12:00）</div>
+          <div class="time-content">
+            • <b>苦瓜萃取膠囊 1 顆</b>：外食高澱粉/大餐前吃，穩定血糖防飯後昏睡。
+          </div>
+        </div>
+
+        <div class="time-node">
+          <div class="time-title">☀️ 午餐後（13:00）</div>
+          <div class="time-content">
+            • <b>WAGNER 鋅錠 1 錠 (30mg)</b>：必須飯後吃防反胃（與下午纖維隔開 2 小時）<br>
+            • <b>山桑子膠囊 或 藍莓膠囊 1 顆</b>：加強眼周血流，改善下午用眼痠澀<br>
+            • <b>口服玻尿酸膠囊 1 顆</b>：深層抓水潤澤（下午多喝水）
+          </div>
+        </div>
+
+        <div class="time-node">
+          <div class="time-title">🥤 下午茶順暢特調（15:30 - 16:30）</div>
+          <div class="time-content">
+            • <b>配方</b>：洋車前子 5g + 羽衣甘藍 2g + 巴西莓粉 1 匙<br>
+            • <b>液體</b>：350c.c. 豆漿/燕麥奶（加香蕉或蜂蜜壓草味）<br>
+            • <b>重點</b>：1 分鐘內喝完，<b>隨後立刻補喝 300~500c.c. 溫水</b>！
+          </div>
+        </div>
+
+        <div class="time-node">
+          <div class="time-title">🌙 晚餐後（19:00 - 20:00）</div>
+          <div class="time-content">
+            • <b>KAL 蘋果酸鎂 1~2 錠</b>：放鬆運動後的緊繃肌肉、補充能量代謝（與午餐的鋅錠完美錯開）。
+          </div>
+        </div>
+
+        <div class="time-node" style="margin-bottom: 0;">
+          <div class="time-title">🛌 睡前 30~60 分鐘（22:30）</div>
+          <div class="time-content">
+            • <b>平日固定</b>：<b>Nutricost L-茶胺酸 1 顆（200mg）</b>（放鬆大腦雜念，幫助自然入睡）<br>
+            • <b>急救備用</b>：<b>Puritan's 退黑激素 1 粒 (10mg)</b>（僅限嚴重失眠時吃，吃完立刻關燈）
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 3. 礦物質、代謝與神經睡眠 -->
+    <details>
+      <summary style="color: #6366f1;">⚡ 礦物質、代謝與睡眠舒緩（含鎂錠）</summary>
+      <div class="content-box">
+        
+        <div class="item-card" style="border-left-color: #6366f1;">
+          <div class="item-header"><span class="item-title">KAL 蘋果酸鎂錠 (Magnesium Malate 400)</span><span class="item-price">約 $254 / 瓶 (90錠)</span></div>
+          <div class="item-spec"><span class="tag tag-new">新加入</span><span class="tag tag-cp">高吸收</span>2錠含純鎂 400mg（單錠 200mg）</div>
+          <div class="item-desc">參與能量克氏循環，專門放鬆緊繃肌肉、預防抽筋、修復運動疲勞。</div>
+          <div class="item-tip">💡 建議時機：晚餐後吃 1~2 錠。<b>勿與午餐的鋅錠同吃（需隔開）；勿與洋車前子同服</b>。</div>
+        </div>
+
+        <div class="item-card" style="border-left-color: #6366f1;">
+          <div class="item-header"><span class="item-title">WAGNER 高強度鋅錠 (Zinc 30mg)</span><span class="item-price">$262 / 120錠</span></div>
+          <div class="item-spec"><span class="tag tag-warn">上限注意</span>純鋅 30mg（葡萄糖酸鋅）</div>
+          <div class="item-desc">增強免疫力、皮膚修復與新陳代謝。</div>
+          <div class="item-tip">💡 建議時機：午餐後吃 1 錠（禁空腹）。<b>與下午洋車前子隔開 2 小時、與鎂錠錯開</b>。</div>
+        </div>
+
+        <div class="item-card" style="border-left-color: #8b5cf6;">
+          <div class="item-header"><span class="item-title">Puritan's Pride 睡眠激素 10mg</span><span class="item-price">約 $320 / 120粒</span></div>
+          <div class="item-spec"><span class="tag tag-urgent">急救高劑量</span>退黑激素 Melatonin 10mg</div>
+          <div class="item-desc">超強效睡眠調節，縮短入睡時間、改善嚴重時差。</div>
+          <div class="item-tip">💡 建議時機：<b>偶爾急救吃 1 粒（睡前30分鐘）</b>。嚴禁天天吃，吃完立刻關燈、放下手機！</div>
+        </div>
+
+        <div class="item-card" style="border-left-color: #8b5cf6;">
+          <div class="item-header"><span class="item-title">Nutricost L-茶胺酸膠囊 200mg</span><span class="item-price">$404 / 240顆</span></div>
+          <div class="item-spec"><span class="tag tag-cp">8個月份</span>純游離 L-茶胺酸 200mg</div>
+          <div class="item-desc">促進大腦 α 放鬆波，消除雜念焦慮，平日固定放鬆好眠。</div>
+          <div class="item-tip">💡 建議時機：睡前 30 分鐘吃 1 顆助眠；或白天配咖啡吃防心悸</div>
+        </div>
+
+        <div class="item-card" style="border-left-color: #8b5cf6;">
+          <div class="item-header"><span class="item-title">Nutricost 苦瓜萃取膠囊</span><span class="item-price">$343 / 180顆</span></div>
+          <div class="item-spec"><span class="tag tag-cp">半年份</span>4:1 濃縮 600mg (等同新鮮苦瓜 2,400mg)</div>
+          <div class="item-desc">穩定高碳水餐後血糖波動，減少餐後昏昏欲睡感。</div>
+          <div class="item-tip">💡 建議時機：吃較多澱粉的大餐前 15~30 分鐘吃 1 顆</div>
+        </div>
+
+      </div>
+    </details>
+
+    <!-- 4. 基礎抗老、微循環與美肌 -->
+    <details>
+      <summary style="color: #ec4899;">🌸 美肌抗老、鎖水與私密保養（6 款）</summary>
+      <div class="content-box">
+        
+        <div class="item-card" style="border-left-color: #f59e0b;">
+          <div class="item-header"><span class="item-title">DHC 葉酸錠 (30日分)</span><span class="item-price">$80 / 30粒</span></div>
+          <div class="item-spec"><span class="tag tag-cp">足量安全</span>葉酸 400mcg (維生素 B9)</div>
+          <div class="item-desc">紅血球形成、細胞修復合成、女性基礎調養。</div>
+          <div class="item-tip">💡 建議時機：早餐後隨餐吃 1 粒，可與維生素 C、魚油一起吃。</div>
+        </div>
+
+        <div class="item-card" style="border-left-color: #ec4899;">
+          <div class="item-header"><span class="item-title">Nutricost 松樹皮萃取膠囊</span><span class="item-price">$321 / 180顆</span></div>
+          <div class="item-spec"><span class="tag tag-cp">隱藏王者</span>300mg (保證含 95% 原花青素 OPC)</div>
+          <div class="item-desc">保護膠原蛋白、抑制黑色素、改善小腿水腫與末梢循環。</div>
+          <div class="item-tip">💡 建議時機：早餐隨餐吃 1 顆，與維生素 C 具加乘抗老效果</div>
+        </div>
+
+        <div class="item-card" style="border-left-color: #ec4899;">
+          <div class="item-header"><span class="item-title">LOVITA 愛維他 rTG90 迷你魚油</span><span class="item-price">約 $862 (買1送1)</span></div>
+          <div class="item-spec">94% Omega-3 (rTG 型態，高吸收 EPA+DHA)</div>
+          <div class="item-desc">調節體內發炎反應、保護心血管與思緒、幫助眼部滋潤。</div>
+          <div class="item-tip">💡 建議時機：早餐後吃 2 顆，油脂能完美加乘葉黃素吸收！</div>
+        </div>
+
+        <div class="item-card" style="border-left-color: #ec4899;">
+          <div class="item-header"><span class="item-title">Nutricost 口服玻尿酸膠囊</span><span class="item-price">$291 / 120顆</span></div>
+          <div class="item-spec"><span class="tag tag-cp">高CP值</span>高純度透明質酸 100mg</div>
+          <div class="item-desc">真皮層深層抓水、改善眼部乾澀、潤滑運動關節。</div>
+          <div class="item-tip">💡 建議時機：隨餐吃 1 顆，當天務必喝足 2,000c.c. 水分</div>
+        </div>
+
+        <div class="item-card" style="border-left-color: #ec4899;">
+          <div class="item-header"><span class="item-title">DHC 持續型維生素 C 1000mg</span><span class="item-price">約 $122 / 60日</span></div>
+          <div class="item-spec">緩釋劑型 (每日 4 粒含 1000mg 純 C)</div>
+          <div class="item-desc">緩釋配方平穩吸收，促進膠原蛋白合成與抗氧化。</div>
+          <div class="item-tip">💡 建議時機：早餐後服用。<b>與 Nutricost 維生素 C 二選一，勿重複吃</b>。</div>
+        </div>
+
+        <div class="item-card" style="border-left-color: #ec4899;">
+          <div class="item-header"><span class="item-title">WAGNER 蔓越莓膠囊 25000+</span><span class="item-price">約 $299 / 90顆</span></div>
+          <div class="item-spec"><span class="tag tag-cp">高濃度</span>蔓越莓 25000mg + 維生素 C 50mg</div>
+          <div class="item-desc">含 A 型前花青素，防止壞菌附著，呵護女性私密與泌尿健康。</div>
+          <div class="item-tip">💡 建議時機：每日 1 顆隨餐，務必每天喝足 1500~2000c.c. 水</div>
+        </div>
+
+      </div>
+    </details>
+
+    <!-- 5. 護眼與藍光防禦類別 -->
+    <details>
+      <summary style="color: #3b82f6;">👁️ 護眼與微血管循環（5 款）</summary>
+      <div class="content-box">
+        <div class="item-card" style="border-left-color: #3b82f6;">
+          <div class="item-header"><span class="item-title">Nutricost 玉米黃素+葉黃素軟膠囊</span><span class="item-price">$338 / 120顆</span></div>
+          <div class="item-spec"><span class="tag tag-cp">高CP值</span>葉黃素 20mg + 玉米黃素 4mg (5:1 黃金比例)</div>
+          <div class="item-desc">阻隔 3C 藍光、保護視網膜黃斑部抗老化。</div>
+          <div class="item-tip">💡 建議時機：早餐後與魚油一起吃，吸收率最高！</div>
+        </div>
+
+        <div class="item-card" style="border-left-color: #3b82f6;">
+          <div class="item-header"><span class="item-title">Nutricost 山桑子膠囊 1200mg</span><span class="item-price">$221 / 90顆</span></div>
+          <div class="item-spec"><span class="tag tag-cp">高CP值</span>300mg (4:1 萃取，等同 1,200mg 生果)</div>
+          <div class="item-desc">促進眼周微血管循環，加速視紫質合成，改善眼部疲勞。</div>
+          <div class="item-tip">💡 建議時機：午餐後吃 1 顆，直接配水吞避開苦澀味</div>
+        </div>
+
+        <div class="item-card" style="border-left-color: #3b82f6;">
+          <div class="item-header"><span class="item-title">Nutricost 藍莓萃取膠囊 8000mg</span><span class="item-price">$360 / 180顆</span></div>
+          <div class="item-spec"><span class="tag tag-cp">半年份</span>50:1 高倍濃縮 (等同 8,000mg 新鮮藍莓)</div>
+          <div class="item-desc">豐富天然花青素，半年份超高 CP 值日常護眼抗氧化。</div>
+          <div class="item-tip">💡 建議時機：午餐或晚餐後吃 1 顆</div>
+        </div>
+
+        <div class="item-card" style="border-left-color: #3b82f6;">
+          <div class="item-header"><span class="item-title">LOVITA 山桑果 EX 素食膠囊</span><span class="item-price">約 $980 / 60顆</span></div>
+          <div class="item-spec">100倍濃縮 (標準化定量 25% 花青素)</div>
+          <div class="item-desc">臨床級高純度花青素，重度用眼者深層緩解。</div>
+          <div class="item-tip">💡 建議時機：每日 1 顆隨餐</div>
+        </div>
+
+        <div class="item-card" style="border-left-color: #3b82f6;">
+          <div class="item-header"><span class="item-title">LOVITA 專利 FloraGLO 葉黃素</span><span class="item-price">約 $680 / 30顆</span></div>
+          <div class="item-spec">美國原廠 FloraGLO 游離型 20mg (全素軟膠囊)</div>
+          <div class="item-desc">名牌專利原料好吸收，素食者友善。</div>
+          <div class="item-tip">💡 建議時機：每日 1 顆隨餐</div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 6. 腸道順暢與穀粉特調 (確認精確收錄 3 款) -->
+    <details>
+      <summary style="color: #059669;">🥤 腸道順暢與穀粉特調（3 款）</summary>
+      <div class="content-box">
+        
+        <div class="item-card" style="border-left-color: #10b981;">
+          <div class="item-header"><span class="item-title">HAENA 洋車前子殼粉</span><span class="item-price">約 $250 / 500g</span></div>
+          <div class="item-spec"><span class="tag tag-cp">純纖維</span>富含水溶性膳食纖維 (單次 5g 熱量幾近 0)</div>
+          <div class="item-desc">吸水膨脹數十倍形成凝膠包覆糞便、增加飽足感、促排便順暢。</div>
+          <div class="item-tip">💡 建議時機：每次 5g 配 350c.c. 快速喝完，務必再補 300~500c.c. 溫水。<b>與鋅、鎂需間隔 2 小時</b>。</div>
+        </div>
+
+        <div class="item-card" style="border-left-color: #10b981;">
+          <div class="item-header"><span class="item-title">joeunyakcho 羽衣甘藍粉</span><span class="item-price">約 $350 / 250g</span></div>
+          <div class="item-spec"><span class="tag tag-cp">生機蔬菜</span>100% 韓國產純羽衣甘藍粉</div>
+          <div class="item-desc">豐富深綠蔬菜營養、葉黃素、維生素 K 與天然植物鈣。具明顯天然草腥味。</div>
+          <div class="item-tip">💡 蓋味秘訣：搭配無糖豆漿/燕麥奶，加半根香蕉或 1 匙純芝麻粉、蜂蜜壓制草味。</div>
+        </div>
+
+        <div class="item-card" style="border-left-color: #10b981;">
+          <div class="item-header"><span class="item-title">Navitas 有機純巴西莓粉 (Acai)</span><span class="item-price">約 $430 / 113g</span></div>
+          <div class="item-spec"><span class="tag tag-cp">天然果香</span>100% 巴西莓低溫冷凍乾燥粉</div>
+          <div class="item-desc">豐富天然花青素、多酚與植物 Omega 脂肪酸，溫和莓果微酸香氣。</div>
+          <div class="item-tip">💡 建議時機：每次 1~1.5 茶匙加入奶昔、優格中。<b>注意：因含天然活性油脂，開封後務必冷藏保存！</b></div>
+        </div>
+
+      </div>
+    </details>
+
+    <!-- 7. 每日花費直觀對比條 (純 CSS) 👉 倒數第二 -->
+    <details>
+      <summary style="color: #0284c7;">📊 每日花費直觀對比（純 CSS）</summary>
+      <div class="content-box">
+        <div class="bar-row"><div class="bar-label"><span>Nutricost 山桑子粉</span><span>$0.5 / 天</span></div><div class="bar-track"><div class="bar-fill bg-green" style="width: 3%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>Nutricost 維生素 C</span><span>$1.4 / 天</span></div><div class="bar-track"><div class="bar-fill bg-green" style="width: 7%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>Nutricost L-茶胺酸</span><span>$1.7 / 天</span></div><div class="bar-track"><div class="bar-fill bg-green" style="width: 9%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>Nutricost 松樹皮 (95% OPC)</span><span>$1.8 / 天</span></div><div class="bar-track"><div class="bar-fill bg-green" style="width: 9%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>Nutricost 苦瓜萃取</span><span>$1.9 / 天</span></div><div class="bar-track"><div class="bar-fill bg-green" style="width: 10%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>DHC 持續型維生素 C</span><span>$2.0 / 天</span></div><div class="bar-track"><div class="bar-fill bg-green" style="width: 10%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>Nutricost 藍莓膠囊</span><span>$2.0 / 天</span></div><div class="bar-track"><div class="bar-fill bg-green" style="width: 10%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>WAGNER 高強度鋅錠</span><span>$2.2 / 天</span></div><div class="bar-track"><div class="bar-fill bg-green" style="width: 11%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>Nutricost 玻尿酸膠囊</span><span>$2.4 / 天</span></div><div class="bar-track"><div class="bar-fill bg-green" style="width: 12%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>Nutricost 山桑子膠囊</span><span>$2.5 / 天</span></div><div class="bar-track"><div class="bar-fill bg-green" style="width: 13%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>DHC 葉酸 (30日分)</span><span>$2.7 / 天</span></div><div class="bar-track"><div class="bar-fill bg-green" style="width: 13%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>Puritan's 退黑激素 10mg</span><span>$2.7 / 粒 (偶爾吃)</span></div><div class="bar-track"><div class="bar-fill bg-green" style="width: 14%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>Nutricost 葉黃素+玉米黃素</span><span>$2.8 / 天</span></div><div class="bar-track"><div class="bar-fill bg-green" style="width: 14%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>KAL 蘋果酸鎂錠 (400mg)</span><span>$2.8 / 天</span></div><div class="bar-track"><div class="bar-fill bg-green" style="width: 14%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>WAGNER 蔓越莓 25000+</span><span>$3.3 / 天</span></div><div class="bar-track"><div class="bar-fill bg-blue" style="width: 17%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>DHC 薏仁精華</span><span>$4.0 / 天</span></div><div class="bar-track"><div class="bar-fill bg-blue" style="width: 20%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>LOVITA rTG90 迷你魚油</span><span>$7.2 / 天</span></div><div class="bar-track"><div class="bar-fill bg-amber" style="width: 36%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>LOVITA 山桑果 EX (定量25%)</span><span>$16.3 / 天</span></div><div class="bar-track"><div class="bar-fill bg-rose" style="width: 82%;"></div></div></div>
+        <div class="bar-row"><div class="bar-label"><span>LOVITA 專利游離葉黃素</span><span>$20.0 / 天</span></div><div class="bar-track"><div class="bar-fill bg-rose" style="width: 100%;"></div></div></div>
+      </div>
+    </details>
+
+    <!-- 8. 自訂手動新增品項擴充區 👉 最下方最後一個 -->
+    <details>
+      <summary style="color: #4f46e5;">✨ 自訂新增品項擴充區（未來貼新產品處）</summary>
+      <div class="content-box">
+        <div class="add-box">
+          💡 <b>如何手動新增？</b><br>
+          未來有新保健品請我分析後，直接將卡片代碼複製，貼在下方的 <code>&lt;!-- [新增品項開始] --&gt;</code> 與 <code>&lt;!-- [新增品項結束] --&gt;</code> 之間即可！
+        </div>
+
+        <div id="custom-items-container">
+          <!-- [新增品項開始] -->
+
+          <!-- 未來新卡片貼在此處 -->
+
+          <!-- [新增品項結束] -->
+        </div>
+      </div>
+    </details>
+
+  </div>
+
+</body>
+</html>
